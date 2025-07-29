@@ -23,8 +23,15 @@ CORS(app, origins=["https://docs.blgvbtc.com", "http://localhost:3000"])
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'dev-secret-key')
 
-# Initialize OpenAI client with GPT-4
-client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+# Initialize OpenAI client with GPT-4 and error handling
+try:
+    client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+    openai_available = True
+    print("✅ OpenAI client initialized successfully")
+except Exception as e:
+    print(f"⚠️ Warning: OpenAI client initialization failed: {e}")
+    client = None
+    openai_available = False
 
 # Database connection
 DATABASE_URL = os.getenv('DATABASE_URL', 'postgresql://doadmin:AVNS_XYQr4PImhwsPrz7EM0m@blgv-ecosystem-do-user-9886684-0.e.db.ondigitalocean.com:25060/defaultdb?sslmode=require')
@@ -387,6 +394,13 @@ def ask_question():
         
         question = data['question']
         logger.info(f"Advanced agent received question: {question}")
+        
+        # Check if OpenAI is available
+        if not openai_available or client is None:
+            return jsonify({
+                'error': 'AI assistant temporarily unavailable',
+                'message': 'OpenAI service is not properly configured. Please check environment variables.'
+            }), 503
         
         # Gather live data
         btc_data = agent.get_live_bitcoin_data()
