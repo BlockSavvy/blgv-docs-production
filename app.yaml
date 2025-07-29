@@ -17,7 +17,7 @@ services:
       deploy_on_push: true
     build_command: |
       pip install --upgrade pip &&
-      pip install -r requirements.txt
+      pip install -r ai-assistant/requirements.txt
     run_command: python ai-assistant/blgv_advanced_financial_agent.py
     environment_slug: python
     instance_count: 1
