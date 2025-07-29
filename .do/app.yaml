@@ -7,29 +7,7 @@ domains:
     type: PRIMARY
     zone: blgvbtc.com
 
-# Static site for Docusaurus documentation
-static_sites:
-  - name: docs-site
-    source_dir: /
-    github:
-      repo: BlockSavvy/blgv-docs-production
-      branch: main
-      deploy_on_push: true
-    build_command: |
-      npm ci &&
-      npm run build
-    output_dir: build
-    index_document: index.html
-    error_document: index.html
-    routes:
-      - path: /
-    envs:
-      - key: NODE_ENV
-        value: production
-      - key: DOCUSAURUS_URL
-        value: https://docs.blgvbtc.com
-
-# AI Assistant API service  
+# AI Assistant API service (must come first for proper routing)
 services:
   - name: docs-ai-assistant
     source_dir: ai-assistant
@@ -69,4 +47,30 @@ services:
       - key: BTCPAY_SERVER_URL
         value: https://btc.gdyup.xyz
     routes:
-      - path: /api 
+      - path: /api
+      - path: /ask
+      - path: /widget
+      - path: /health
+
+# Static site for Docusaurus documentation
+static_sites:
+  - name: docs-site
+    source_dir: /
+    github:
+      repo: BlockSavvy/blgv-docs-production
+      branch: main
+      deploy_on_push: true
+    build_command: |
+      npm ci &&
+      npm run build
+    output_dir: build
+    index_document: index.html
+    error_document: index.html
+    catchall_document: index.html
+    routes:
+      - path: /
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: DOCUSAURUS_URL
+        value: https://docs.blgvbtc.com 
