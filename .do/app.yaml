@@ -61,6 +61,6 @@ services:
         value: ${BTCPAY_API_KEY}
         type: SECRET
       - key: BTCPAY_SERVER_URL
-        value: ${BTCPAY_SERVER_URL}
+        value: https://btc.gdyup.xyz
     routes:
-      - path: /api
+      - path: /api 
