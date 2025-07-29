@@ -1,5 +1,5 @@
 import os
-import openai
+from openai import OpenAI
 from flask import Flask, request, jsonify, render_template_string
 from flask_cors import CORS
 import logging
@@ -10,7 +10,9 @@ CORS(app, origins=["https://docs.blgvbtc.com", "http://localhost:3000"])
 
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'dev-secret-key')
-openai.api_key = os.getenv('OPENAI_API_KEY')
+
+# Initialize OpenAI client
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 # Logging
 logging.basicConfig(level=logging.INFO)
@@ -69,8 +71,8 @@ def ask_question():
         question = data['question']
         logger.info(f"Received question: {question}")
         
-        # Create OpenAI completion (older syntax)
-        response = openai.ChatCompletion.create(
+        # Create OpenAI completion (new client syntax)
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": BLGV_CONTEXT},
