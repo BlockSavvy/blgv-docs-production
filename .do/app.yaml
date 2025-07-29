@@ -65,7 +65,6 @@ static_sites:
       npm run build
     output_dir: build
     index_document: index.html
-    error_document: index.html
     catchall_document: index.html
     routes:
       - path: /
