@@ -14,8 +14,6 @@ from flask import Flask, request, jsonify, render_template_string
 from flask_cors import CORS
 import psycopg2
 from psycopg2.extras import RealDictCursor
-import yfinance as yf
-import pandas as pd
 import random
 
 # Initialize Flask app
@@ -161,22 +159,31 @@ class AdvancedFinancialAgent:
         return {}
     
     def get_stock_prices(self, symbols: List[str]) -> Dict[str, float]:
-        """Get live stock prices for comparison companies"""
-        try:
-            tickers = yf.Tickers(' '.join(symbols))
-            prices = {}
-            for symbol in symbols:
-                try:
-                    ticker = tickers.tickers[symbol]
-                    hist = ticker.history(period="1d")
-                    if not hist.empty:
-                        prices[symbol] = float(hist['Close'].iloc[-1])
-                except:
+        """Get live stock prices for comparison companies using Yahoo Finance API"""
+        prices = {}
+        for symbol in symbols:
+            try:
+                # Use Yahoo Finance's direct API endpoint
+                url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}"
+                response = requests.get(url, timeout=10)
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    result = data.get('chart', {}).get('result', [])
+                    if result:
+                        meta = result[0].get('meta', {})
+                        current_price = meta.get('regularMarketPrice') or meta.get('previousClose', 0.0)
+                        prices[symbol] = float(current_price)
+                    else:
+                        prices[symbol] = 0.0
+                else:
                     prices[symbol] = 0.0
-            return prices
-        except Exception as e:
-            logger.error(f"Error fetching stock prices: {e}")
-            return {symbol: 0.0 for symbol in symbols}
+                    
+            except Exception as e:
+                logger.error(f"Error fetching price for {symbol}: {e}")
+                prices[symbol] = 0.0
+                
+        return prices
 
     def get_treasury_comparisons(self) -> List[Dict[str, Any]]:
         """Get LIVE Bitcoin treasury holdings of other companies for comparison"""
