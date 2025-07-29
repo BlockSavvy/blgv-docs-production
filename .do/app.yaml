@@ -1,6 +1,12 @@
 name: blgv-docs
 region: nyc1
 
+# Custom domains
+domains:
+  - domain: docs.blgvbtc.com
+    type: PRIMARY
+    zone: blgvbtc.com
+
 # Static site for Docusaurus documentation
 static_sites:
   - name: docs-site
