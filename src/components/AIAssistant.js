@@ -6,7 +6,7 @@ const AIAssistant = () => {
   const [messages, setMessages] = useState([
     {
       type: 'assistant',
-      content: '👋 Hi! I\'m the BLGV AI Assistant. I can help you with questions about our Bitcoin-native ecosystem, including Treasury, DEX, Pool, and Mobile platforms. What would you like to know?'
+      content: '👋 Hi! I\'m the BLGV AI Assistant. I can help you with questions about our Bitcoin-native ecosystem, including Treasury, DEX, Mining Pool, Lightning LSP, and Mobile platforms. What would you like to know?'
     }
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -67,7 +67,8 @@ const AIAssistant = () => {
     "How do I set up the mobile app?",
     "What's the difference between regtest and production?",
     "How does the DEX platform work?",
-    "Tell me about Mission 1867"
+    "Tell me about the Lightning LSP",
+    "What is Mission 1867?"
   ];
 
   const handleQuickQuestion = (question) => {
