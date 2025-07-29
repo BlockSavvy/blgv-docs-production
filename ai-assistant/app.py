@@ -1,5 +1,5 @@
 import os
-import openai
+from openai import OpenAI
 from flask import Flask, request, jsonify, render_template_string
 from flask_cors import CORS
 import logging
@@ -10,7 +10,9 @@ CORS(app, origins=["https://docs.blgvbtc.com", "http://localhost:3000"])
 
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'dev-secret-key')
-openai.api_key = os.getenv('OPENAI_API_KEY')
+
+# Initialize OpenAI client
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 # Logging
 logging.basicConfig(level=logging.INFO)
@@ -21,21 +23,31 @@ BLGV_CONTEXT = """
 You are an AI assistant for the BLGV (Belgravia Hartford) Bitcoin-native financial ecosystem documentation.
 
 BLGV Ecosystem includes:
-- Treasury Intelligence Platform (blgvbtc.com)
-- DEX Platform (dex.blgvbtc.com) 
-- Mining Pool (pool.blgvbtc.com) - "Mission 1867"
-- Lightning LSP (in development)
-- Mobile App (React Native + Expo)
-- Unified API Server (api.blgvbtc.com)
+- Treasury Intelligence Platform (blgvbtc.com) - Bitcoin treasury management and analytics
+- DEX Platform (dex.blgvbtc.com) - Decentralized Bitcoin trading with Taproot Assets  
+- Mining Pool (pool.blgvbtc.com) - Bitcoin mining operations "Mission 1867"
+- Lightning LSP (lsp.blgvbtc.com) - Lightning Network services and liquidity provision
+- Mobile App (React Native + Expo) - Unified mobile interface for all platforms
+- Unified API Server (api.blgvbtc.com) - Central API gateway and cross-platform integration
 
 Key principles:
-- Bitcoin-First (no altcoins)
-- NO HARDCODED DATA (use regtest environment for development)
-- Real-time WebSocket integration
-- Mobile-first design
-- Enterprise-grade security
+- Bitcoin-First (no altcoins - only Bitcoin and Lightning Network)
+- NO HARDCODED DATA (use regtest environment for development, real data for production)
+- Real-time WebSocket integration across all platforms
+- Mobile-first design philosophy
+- Enterprise-grade security and compliance
+- Unified SDK for cross-platform development
 
-Be helpful, professional, and focus on Bitcoin-native solutions.
+Technical Stack:
+- TypeScript/React for web platforms
+- React Native/Expo for mobile
+- Python/Flask for mining pool
+- Node.js/Express for API services
+- PostgreSQL with multi-schema architecture
+- Docker regtest environment for development
+- Digital Ocean for production hosting
+
+Be helpful, professional, and focus on Bitcoin-native solutions. Always encourage using the regtest environment for development and testing.
 """
 
 @app.route('/health')
@@ -47,6 +59,7 @@ def health_check():
         'version': '1.0.0'
     }), 200
 
+@app.route('/ask', methods=['POST'])
 @app.route('/api/ask', methods=['POST'])
 def ask_question():
     """Main AI assistant endpoint"""
@@ -59,7 +72,7 @@ def ask_question():
         logger.info(f"Received question: {question}")
         
         # Create OpenAI completion
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": BLGV_CONTEXT},
@@ -81,6 +94,7 @@ def ask_question():
         logger.error(f"Error processing question: {str(e)}")
         return jsonify({'error': 'Failed to process question'}), 500
 
+@app.route('/widget')
 @app.route('/api/widget')
 def chat_widget():
     """Simple chat widget for embedding in documentation"""
