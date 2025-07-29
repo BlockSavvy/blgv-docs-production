@@ -25,10 +25,10 @@
 #### **Step 2.1: Database Schema Analysis & Export**
 ```bash
 # Export current DEX database
-pg_dump "postgresql://username:password@host:port/database
+pg_dump "postgresql://neondb_owner:npg_scTCq4fU8uML@ep-odd-feather-a59mn0nt.us-east-2.aws.neon.tech/neondb" > dex_database_backup.sql
 
 # Analyze schema structure
-psql "postgresql://username:password@host:port/database
+psql "postgresql://neondb_owner:npg_scTCq4fU8uML@ep-odd-feather-a59mn0nt.us-east-2.aws.neon.tech/neondb" -c "\dt"
 ```
 
 #### **Step 2.2: Create DEX Schema in Unified Database**
@@ -49,18 +49,18 @@ SET search_path TO dex, public;
 sed 's/public\./dex\./g' dex_database_backup.sql > dex_schema_migration.sql
 
 # Import to unified database
-psql "postgresql://username:password@host:port/database
+psql "postgresql://doadmin:AVNS_XYQr4PImhwsPrz7EM0m@blgv-ecosystem-do-user-9886684-0.e.db.ondigitalocean.com:25060/defaultdb" < dex_schema_migration.sql
 ```
 
 #### **Step 2.4: Update DEX Environment Configuration**
 ```bash
 # platforms/dex/.env (new)
-DATABASE_URL=postgresql://username:password@host:port/database?sslmode=require
+DATABASE_URL=postgresql://doadmin:AVNS_XYQr4PImhwsPrz7EM0m@blgv-ecosystem-do-user-9886684-0.e.db.ondigitalocean.com:25060/defaultdb?sslmode=require
 PGDATABASE=defaultdb
-PGHOST=YOUR_DATABASE_HOST
+PGHOST=blgv-ecosystem-do-user-9886684-0.e.db.ondigitalocean.com
 PGPORT=25060
 PGUSER=doadmin
-PGPASSWORD=YOUR_ACTUAL_PASSWORD_HERE
+PGPASSWORD=AVNS_XYQr4PImhwsPrz7EM0m
 
 # Update connection in platforms/dex/server/db.ts to set search_path=dex
 ```
@@ -98,7 +98,7 @@ curl -s "https://dex-staging.blgvbtc.com/api/pools"
 #### **Step 3.1: Database Schema Analysis & Export**
 ```bash
 # Export current Treasury database
-pg_dump "postgresql://username:password@host:port/database
+pg_dump "postgresql://neondb_owner:npg_DP3e7MShngsW@ep-wandering-firefly-w4k6m77y.c-2.us-east-1.aws.neon.tech/neondb" > treasury_database_backup.sql
 ```
 
 #### **Step 3.2: Create Treasury Schema in Unified Database**
@@ -114,7 +114,7 @@ SET search_path TO treasury, public;
 # Critical: Preserve all user accounts and sessions
 # Treasury has live users with email/password authentication
 sed 's/public\./treasury\./g' treasury_database_backup.sql > treasury_schema_migration.sql
-psql "postgresql://username:password@host:port/database
+psql "postgresql://doadmin:AVNS_XYQr4PImhwsPrz7EM0m@blgv-ecosystem-do-user-9886684-0.e.db.ondigitalocean.com:25060/defaultdb" < treasury_schema_migration.sql
 ```
 
 #### **Step 3.4: Create DigitalOcean App for Treasury**

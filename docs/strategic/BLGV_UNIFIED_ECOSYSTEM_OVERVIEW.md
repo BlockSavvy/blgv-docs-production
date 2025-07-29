@@ -719,12 +719,12 @@ SESSION_SECRET=blgv-unified-ecosystem-session-secret-production-2025
 # Bitcoin
 BTCPAY_SERVER_URL=https://btc.gdyup.xyz
 BTCPAY_STORE_ID=GcR3vzdWr67xPw7yFSuS7XzmKj3y5d9kUmGq9RHjmHF7
-BTCPAY_API_KEY=YOUR_BTCPAY_API_KEY
+BTCPAY_API_KEY=9f56512bbf4f55647213d63d740764fa990cab8f
 
 # Platform Integration
 TREASURY_API_KEY=treasury-api-key-for-unified-access-2025
 DEX_HMAC_SECRET=treasury-dex-integration-bf7c9a84-3f2e-4d5a-8b91-e7f6c2a4d8e9-secure-hmac-auth-2025
-POOL_API_KEY=blgv-pool-unified-access-2025-YOUR_SESSION_SECRET
+POOL_API_KEY=blgv-pool-unified-access-2025-cP3EjJEruzVZWsf5mj636I2GdWU465YoaAIuCfXsal7
 ```
 
 ### Mobile App Environment

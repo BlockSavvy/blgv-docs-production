@@ -32,7 +32,7 @@ Complete environment configuration for all BLGV platforms across development, re
 
 ```env
 # === CORE CONFIGURATION ===
-DATABASE_URL=postgresql://username:password@host:port/database?sslmode=prefer
+DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
 NODE_ENV=production
 PORT=8080
 
@@ -41,13 +41,13 @@ JWT_SECRET=blgv-unified-ecosystem-jwt-secret-production-2025
 SESSION_SECRET=blgv-unified-ecosystem-session-secret-production-2025
 
 # === PLATFORM API KEYS ===
-POOL_API_KEY=blgv-pool-unified-access-2025-YOUR_SESSION_SECRET
-POOL_SESSION_SECRET=YOUR_SESSION_SECRET
+POOL_API_KEY=blgv-pool-unified-access-2025-cP3EjJEruzVZWsf5mj636I2GdWU465YoaAIuCfXsal7
+POOL_SESSION_SECRET=cP3EjJEruzVZWsf5mj636I2GdWU/9nCepBvl954GXNPP8trq7w465YoaAIuCfXsal7PUQlIlMp0oBxVGxk24CA==
 DEX_HMAC_SECRET=treasury-dex-integration-bf7c9a84-3f2e-4d5a-8b91-e7f6c2a4d8e9-secure-hmac-auth-2025
 TREASURY_API_KEY=treasury-api-key-for-unified-access-2025
 
 # === BTCPAY SERVER ===
-BTCPAY_API_KEY=YOUR_BTCPAY_API_KEY
+BTCPAY_API_KEY=9f56512bbf4f55647213d63d740764fa990cab8f
 BTCPAY_SERVER_URL=https://btc.gdyup.xyz
 BTCPAY_STORE_ID=GcR3vzdWr67xPw7yFSuS7XzmKj3y5d9kUmGq9RHjmHF7
 
@@ -57,9 +57,9 @@ ALPHA_VANTAGE_API_KEY=ZGHDGA0EQBWWPIMY
 FIXER_API_KEY=demo
 
 # === DATABASE SCHEMA URLS ===
-POOL_DATABASE_URL=postgresql://username:password@host:port/database?sslmode=prefer&options=-csearch_path%3Dpool,shared,public
-DEX_DATABASE_URL=postgresql://username:password@host:port/database?sslmode=prefer&options=-csearch_path%3Ddex,shared,public
-TREASURY_DATABASE_URL=postgresql://username:password@host:port/database?sslmode=prefer&options=-csearch_path%3Dtreasury,shared,public
+POOL_DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
+DEX_DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
+TREASURY_DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
 ```
 
 ### **DEX Platform Production**
@@ -68,12 +68,12 @@ TREASURY_DATABASE_URL=postgresql://username:password@host:port/database?sslmode=
 
 ```env
 # === DATABASE ===
-DATABASE_URL=postgresql://username:password@host:port/database?sslmode=require&options=-csearch_path%3Ddex,shared,public
+DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
 PGDATABASE=defaultdb
-PGHOST=YOUR_DATABASE_HOST
+PGHOST=blgv-ecosystem-do-user-9886684-0.e.db.ondigitalocean.com
 PGPORT=25060
 PGUSER=doadmin
-PGPASSWORD=YOUR_ACTUAL_PASSWORD_HERE
+PGPASSWORD=[SANITIZED_PASSWORD]
 
 # === AUTHENTICATION ===
 SESSION_SECRET=FPiyC3eA/xp1o0kPQ9i1MQU7RpzH/y/bcYLPjdEOGCgCjhf/iBbv99ZmxoIbKwRqANrm+ssqsxIlznMcgBl0bA==
@@ -142,13 +142,13 @@ BUILD_HASH=${BUILD_HASH}
 
 ```env
 # === DATABASE ===
-DATABASE_URL=postgresql://username:password@host:port/database?sslmode=prefer&options=-csearch_path%3Dtreasury,shared,public
-POOL_DATABASE_URL=postgresql://username:password@host:port/database?sslmode=require&options=-csearch_path%3Dpool,shared,public
+DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
+POOL_DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
 PGDATABASE=defaultdb
-PGHOST=YOUR_DATABASE_HOST
+PGHOST=blgv-ecosystem-do-user-9886684-0.e.db.ondigitalocean.com
 PGPORT=25060
 PGUSER=doadmin
-PGPASSWORD=YOUR_ACTUAL_PASSWORD_HERE
+PGPASSWORD=[SANITIZED_PASSWORD]
 
 # === APPLICATION ===
 NODE_ENV=production
@@ -164,8 +164,8 @@ BLGV_TEST_MODE=false
 BLGV_SHOW_FAKE_ASSETS=false
 
 # === AUTHENTICATION ===
-SESSION_SECRET=YOUR_SESSION_SECRET
-FLASK_SECRET_KEY=YOUR_SESSION_SECRET
+SESSION_SECRET=cP3EjJEruzVZWsf5mj636I2GdWU/9nCepBvl954GXNPP8trq7w465YoaAIuCfXsal7PUQlIlMp0oBxVGxk24CA==
+FLASK_SECRET_KEY=cP3EjJEruzVZWsf5mj636I2GdWU/9nCepBvl954GXNPP8trq7w465YoaAIuCfXsal7PUQlIlMp0oBxVGxk24CA==
 
 # === BTCPAY SERVER ===
 BTCPAY_API_KEY=767f0cb9a9a73efc328cc388ec34623792923dd7
@@ -276,10 +276,10 @@ EXPO_PUBLIC_COINAPI_KEY=regtest_mode_no_key_needed
 
 ```env
 # === DATABASE CONFIGURATION ===
-DATABASE_URL=postgresql://username:password@host:port/database?sslmode=disable
-POOL_DATABASE_URL=postgresql://username:password@host:port/database?sslmode=disable&options=-csearch_path%3Dpool,shared,public
-DEX_DATABASE_URL=postgresql://username:password@host:port/database?sslmode=disable&options=-csearch_path%3Ddex,shared,public
-TREASURY_DATABASE_URL=postgresql://username:password@host:port/database?sslmode=disable&options=-csearch_path%3Dtreasury,shared,public
+DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
+POOL_DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
+DEX_DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
+TREASURY_DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
 
 # === APPLICATION SETTINGS ===
 NODE_ENV=development
@@ -338,7 +338,7 @@ VERBOSE_LOGGING=true
 ### **Local Development Template**
 ```env
 # === DATABASE ===
-DATABASE_URL=postgresql://localhost:5432/blgv_development
+DATABASE_URL="postgresql://[SANITIZED_DATABASE_URL]"
 NODE_ENV=development
 
 # === API KEYS (Development) ===

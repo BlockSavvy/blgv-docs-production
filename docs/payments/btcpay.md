@@ -102,7 +102,7 @@ curl -X POST "https://btc.gdyup.xyz/api/v1/stores" \
 ### Environment Configuration
 ```bash
 # Production BTCPay settings
-BTCPAY_API_KEY=YOUR_BTCPAY_API_KEY
+BTCPAY_API_KEY=9f56512bbf4f55647213d63d740764fa990cab8f
 BTCPAY_SERVER_URL=https://btc.gdyup.xyz
 BTCPAY_STORE_ID=GcR3vzdWr67xPw7yFSuS7XzmKj3y5d9kUmGq9RHjmHF7
 

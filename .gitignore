@@ -5,67 +5,92 @@ yarn-debug.log*
 yarn-error.log*
 
 # Production build
-/build
-
-# IDE
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Cache and build artifacts
-.docusaurus/
-.cache/
-.build/
 build/
 dist/
+.docusaurus/
+.cache/
 
 # Environment files
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-*.env
-
-# Logs
-*.log
-logs/
-
-# Secrets and sensitive files
-secrets/
-config/secrets/
-*.key
-*.pem
-*.p12
-*.crt
+.env.development
+.env.test
+.env.production
 
 # Database files
 *.db
 *.sqlite
 *.sqlite3
 
-# Large files and binaries
+# Logs
+logs/
+*.log
+
+# Runtime
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Secrets and sensitive data
+*secret*
+*key*
+*password*
+*token*
+*credential*
+database_url*
+DATABASE_URL*
+POSTGRES*
+API_KEY*
+*_KEY
+
+# Large files
+*.pdf
 *.zip
 *.tar.gz
-*.tgz
 *.rar
 *.7z
 *.dmg
 *.iso
 
-# iOS build artifacts
-*.xcworkspace
-*.xcodeproj
-.build/
-*.build/
-*.swiftpm/
-Package.resolved
-
-# Large cache files
-**/.build/**
-**/node_modules/**
-**/.cache/**
-**/.docusaurus/**
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
