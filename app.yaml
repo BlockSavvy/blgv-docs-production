@@ -55,9 +55,9 @@ services:
       - path: /treasury-comparison
       - path: /saylor-wisdom
       - path: /health
-      - path: /
+      - path: /agent
 
-# Static site for Docusaurus documentation (must come after AI service for proper routing)
+# Static site for Docusaurus documentation
 static_sites:
   - name: docs-site
     source_dir: /
@@ -72,7 +72,7 @@ static_sites:
     index_document: index.html
     catchall_document: index.html
     routes:
-      - path: /docs
+      - path: /
     envs:
       - key: NODE_ENV
         value: production
