@@ -1,4 +1,4 @@
-name: blgv-docs-advanced
+name: blgv-docs-clean
 region: nyc1
 
 # Custom domains
@@ -7,7 +7,7 @@ domains:
     type: PRIMARY
     zone: blgvbtc.com
 
-# Static documentation site
+# Static documentation site - NO FLASK AGENT
 static_sites:
   - name: blgv-docs-site
     source_dir: /
@@ -15,6 +15,6 @@ static_sites:
       repo: BlockSavvy/blgv-docs-production
       branch: main
       deploy_on_push: true
-    build_command: npm install && npm run build
+    build_command: npm ci && npm run build
     routes:
       - path: / 
