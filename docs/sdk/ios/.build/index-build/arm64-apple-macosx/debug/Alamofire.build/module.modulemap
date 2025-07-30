@@ -1,0 +1,4 @@
+module Alamofire {
+    header "/Users/maiyash/Unified-Treasury-System/docs/docs/sdk/ios/.build/index-build/arm64-apple-macosx/debug/Alamofire.build/Alamofire-Swift.h"
+    requires objc
+}

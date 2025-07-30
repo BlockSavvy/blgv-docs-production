@@ -1,20 +1,96 @@
-# OS files
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Production build
+build/
+dist/
+.docusaurus/
+.cache/
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Runtime
 .DS_Store
-.DS_Store?
-._*
 Thumbs.db
 
-# IDE files
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# Logs
-*.log
-logs/
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# Environment files
-.env
-.env.local
+# Secrets and sensitive data
+*secret*
+*key*
+*password*
+*token*
+*credential*
+database_url*
+DATABASE_URL*
+POSTGRES*
+API_KEY*
+*_KEY
+
+# Large files
+*.pdf
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.dmg
+*.iso
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
