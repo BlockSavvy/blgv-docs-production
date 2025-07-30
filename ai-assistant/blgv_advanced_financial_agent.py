@@ -297,55 +297,6 @@ You have:
 REMEMBER: BLGV's destiny is to lead the Bitcoin treasury revolution. Be the guiding force!
 """
 
-@app.route('/')
-def home():
-    """Landing page for the BLGV Treasury Agent"""
-    return render_template_string('''
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLGV Ultimate Treasury Agent</title>
-    <style>
-        body { font-family: -apple-system, system-ui, sans-serif; background: #0a0a0a; color: #fff; margin: 0; padding: 40px; text-align: center; }
-        .container { max-width: 800px; margin: 0 auto; }
-        h1 { color: #f7931a; font-size: 3em; margin-bottom: 20px; }
-        .subtitle { color: #ccc; font-size: 1.2em; margin-bottom: 40px; }
-        .links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-        .link { background: linear-gradient(135deg, #f7931a, #ff6b35); color: #000; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: transform 0.2s; }
-        .link:hover { transform: translateY(-2px); }
-        .status { margin: 40px 0; padding: 20px; background: #1a1a1a; border-radius: 8px; }
-        .bitcoin { color: #f7931a; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>🧡 BLGV Ultimate Treasury Agent</h1>
-        <p class="subtitle">Bitcoin-Maximalist Financial Intelligence • Real-time Data • Saylor-Level Conviction</p>
-        
-        <div class="status">
-            <h3>System Status: <span class="bitcoin">OPERATIONAL</span></h3>
-            <p>Treasury Intelligence Platform • 18+ Competitor Tracking • Live Bitcoin Data</p>
-        </div>
-        
-        <div class="links">
-            <a href="/widget" class="link">🤖 AI Chat Widget</a>
-            <a href="/metrics" class="link">📊 Live Metrics</a>
-            <a href="/treasury-comparison" class="link">🏆 Treasury Comparison</a>
-            <a href="/saylor-wisdom" class="link">🧡 Saylor Wisdom</a>
-            <a href="/health" class="link">❤️ Health Check</a>
-        </div>
-        
-        <div style="margin-top: 60px; color: #666;">
-            <p><em>"Bitcoin is hope. Fiat is a melting ice cube."</em> - Michael Saylor</p>
-            <p>BLGV Treasury Agent v3.0.0 • Ready to guide BLGV to Bitcoin dominance</p>
-        </div>
-    </div>
-</body>
-</html>
-    ''')
-
 @app.route('/health')
 def health_check():
     return jsonify({
@@ -637,6 +588,57 @@ def saylor_wisdom():
         'context': f"Bitcoin at ${btc_data.bitcoin_price:,.2f} - {quote}",
         'timestamp': datetime.now().isoformat()
     })
+
+# Home route - MUST be last so specific routes are processed first
+@app.route('/', methods=['GET'])
+@app.route('/agent', methods=['GET'])
+def home():
+    """Landing page for the BLGV Treasury Agent"""
+    return render_template_string('''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLGV Ultimate Treasury Agent</title>
+    <style>
+        body { font-family: -apple-system, system-ui, sans-serif; background: #0a0a0a; color: #fff; margin: 0; padding: 40px; text-align: center; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #f7931a; font-size: 3em; margin-bottom: 20px; }
+        .subtitle { color: #ccc; font-size: 1.2em; margin-bottom: 40px; }
+        .links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .link { background: linear-gradient(135deg, #f7931a, #ff6b35); color: #000; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: transform 0.2s; }
+        .link:hover { transform: translateY(-2px); }
+        .status { margin: 40px 0; padding: 20px; background: #1a1a1a; border-radius: 8px; }
+        .bitcoin { color: #f7931a; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧡 BLGV Ultimate Treasury Agent</h1>
+        <p class="subtitle">Bitcoin-Maximalist Financial Intelligence • Real-time Data • Saylor-Level Conviction</p>
+        
+        <div class="status">
+            <h3>System Status: <span class="bitcoin">OPERATIONAL</span></h3>
+            <p>Treasury Intelligence Platform • 18+ Competitor Tracking • Live Bitcoin Data</p>
+        </div>
+        
+        <div class="links">
+            <a href="/widget" class="link">🤖 AI Chat Widget</a>
+            <a href="/metrics" class="link">📊 Live Metrics</a>
+            <a href="/treasury-comparison" class="link">🏆 Treasury Comparison</a>
+            <a href="/saylor-wisdom" class="link">🧡 Saylor Wisdom</a>
+            <a href="/health" class="link">❤️ Health Check</a>
+        </div>
+        
+        <div style="margin-top: 60px; color: #666;">
+            <p><em>"Bitcoin is hope. Fiat is a melting ice cube."</em> - Michael Saylor</p>
+            <p>BLGV Treasury Agent v3.0.0 • Ready to guide BLGV to Bitcoin dominance</p>
+        </div>
+    </div>
+</body>
+</html>
+    ''')
 
 if __name__ == '__main__':
     logger.info("🚀 Starting BLGV Ultimate Treasury Agent")
