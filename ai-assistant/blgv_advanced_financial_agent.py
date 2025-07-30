@@ -113,13 +113,23 @@ app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY', 'dev-secret-key')
 DATABASE_URL = os.getenv('DATABASE_URL') or os.getenv('TREASURY_DATABASE_URL', 
     'postgresql://doadmin:AVNS_XYQr4PImhwsPrz7EM0m@blgv-ecosystem-do-user-9886684-0.e.db.ondigitalocean.com:25060/defaultdb?sslmode=require')
 
-# Initialize OpenAI client
+# Initialize OpenAI client with robust error handling
 try:
-    client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+    openai_api_key = os.getenv('OPENAI_API_KEY')
+    if not openai_api_key:
+        raise ValueError("OPENAI_API_KEY environment variable not set")
+    
+    # Initialize with minimal parameters to avoid version conflicts
+    client = OpenAI(
+        api_key=openai_api_key,
+        timeout=30.0  # Add timeout
+    )
     openai_available = True
     logger.info("✅ OpenAI client initialized successfully")
 except Exception as e:
     logger.error(f"❌ OpenAI initialization failed: {e}")
+    logger.error("❌ Continuing without OpenAI - agent will run in limited mode")
+    client = None
     openai_available = False
 
 @dataclass
@@ -293,8 +303,12 @@ def health_check():
 
 @app.route('/ask', methods=['POST'])
 def ask_question():
-    if not openai_available:
-        return jsonify({'error': 'AI service unavailable - Bitcoin requires intelligence!'}), 503
+    if not openai_available or client is None:
+        return jsonify({
+            'error': 'AI service unavailable - OpenAI client failed to initialize',
+            'fallback_answer': 'Bitcoin is hope. The Ultimate Treasury Agent is temporarily unavailable, but the Bitcoin revolution continues! 🧡',
+            'status': 'limited_mode'
+        }), 503
     
     data = request.get_json()
     question = data.get('question')
