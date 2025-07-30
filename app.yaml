@@ -35,6 +35,9 @@ services:
       - key: DATABASE_URL
         scope: RUN_TIME
         value: ${DATABASE_URL}
+      - key: TREASURY_DATABASE_URL
+        scope: RUN_TIME
+        value: ${TREASURY_DATABASE_URL}
       - key: ALPHA_VANTAGE_KEY
         scope: RUN_TIME
         value: ${ALPHA_VANTAGE_KEY}
@@ -49,6 +52,8 @@ services:
       - path: /ask
       - path: /widget
       - path: /metrics
+      - path: /treasury-comparison
+      - path: /saylor-wisdom
       - path: /health
 
 # Static site for Docusaurus documentation
