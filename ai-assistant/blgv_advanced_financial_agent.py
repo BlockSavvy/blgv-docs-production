@@ -992,11 +992,11 @@ def chat_widget():
             <div class="saylor-quote" id="saylorQuote">"Bitcoin is hope." - Michael Saylor</div>
             
             <div class="suggestions">
-                <span class="suggestion" onclick="askQuestion('How does BLGV compare to MicroStrategy?')">MSTR Comparison</span>
-                <span class="suggestion" onclick="askQuestion('What is BLGV BTC per share strategy?')">BTC/Share Strategy</span>
-                <span class="suggestion" onclick="askQuestion('Should BLGV issue convertible bonds?')">Convertible Bonds</span>
-                <span class="suggestion" onclick="askQuestion('Analyze BLGV treasury position vs competitors')">Competitive Analysis</span>
-                <span class="suggestion" onclick="askQuestion('Bitcoin treasury optimization recommendations')">Optimization Plan</span>
+                <span class="suggestion" onclick="askQuestion('Analyze BLGV after the $5M convertible closing')">Convertible Analysis</span>
+                <span class="suggestion" onclick="askQuestion('What should BLGV do with the $5M capital?')">Capital Deployment</span>
+                <span class="suggestion" onclick="askQuestion('Compare BLGV to MicroStrategy and Metaplanet')">Competitive Comparison</span>
+                <span class="suggestion" onclick="askQuestion('Best acquisition targets for BLGV')">Acquisition Targets</span>
+                <span class="suggestion" onclick="askQuestion('BLGV Bitcoin per share optimization strategy')">BTC/Share Strategy</span>
             </div>
 
             <div class="input-group">
@@ -1028,29 +1028,61 @@ def chat_widget():
             const question = predefinedQuestion || document.getElementById('questionInput').value.trim();
             if (!question) return;
 
-            document.getElementById('responseArea').innerHTML = '<div class="loading">🧠 Ultimate Treasury Agent analyzing...</div>';
+            document.getElementById('responseArea').innerHTML = '<div class="loading">🧠 Ultimate Treasury Agent analyzing with premium intelligence...</div>';
             
             try {
-                const response = await fetch('/ask', {
+                // Use the enhanced DigitalOcean Agent Platform agent
+                const response = await fetch('https://pegg3oo7tglmlptdrqql4wjr.agents.do-ai.run/api/v1/chat/completions', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ question })
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer LemeQQ6E03cAB1HgBC0ZzY7Sq71OxTMa'
+                    },
+                    body: JSON.stringify({
+                        messages: [
+                            {
+                                role: 'system',
+                                content: 'You are the BLGV Ultimate Treasury Agent with access to premium Bitcoin treasury intelligence from bitcointreasuries.net, Arkham Intelligence, and Fidelity Digital Assets. Be brutally honest about BLGV\\'s current 40.77 BTC position vs competitors. Provide specific actionable recommendations with timelines and costs. Always end with relevant Saylor wisdom.'
+                            },
+                            { role: 'user', content: question }
+                        ],
+                        temperature: 0.7,
+                        max_tokens: 1200,
+                        include_retrieval_info: true,
+                        k: 10,
+                        retrieval_method: 'sub_queries'
+                    })
                 });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
                 
                 const data = await response.json();
                 
-                if (data.answer) {
+                if (data.choices && data.choices[0]) {
+                    const agentResponse = data.choices[0].message.content;
+                    const hasKnowledgeData = data.retrieval?.retrieved_data?.length > 0;
+                    
                     document.getElementById('responseArea').innerHTML = `
                         <div class="response">
                             <strong>🧡 Ultimate Treasury Agent:</strong><br><br>
-                            ${data.answer.replace(/\\n/g, '<br>')}
+                            ${agentResponse.replace(/\\n/g, '<br>')}
+                            ${hasKnowledgeData ? '<br><br><small style="color: #888;">✅ Enhanced with premium intelligence data</small>' : ''}
                         </div>
                     `;
                 } else {
-                    document.getElementById('responseArea').innerHTML = '<div class="response">Error: Unable to get response from agent.</div>';
+                    throw new Error('Invalid response format');
                 }
             } catch (error) {
-                document.getElementById('responseArea').innerHTML = '<div class="response">Error: Network connection failed.</div>';
+                console.error('Enhanced agent error:', error);
+                document.getElementById('responseArea').innerHTML = `
+                    <div class="response">
+                        <strong>❌ Enhanced Agent Error:</strong><br>
+                        Unable to connect to Treasury Agent. Please try again.<br><br>
+                        <em>"Bitcoin is hope. Fiat is a melting ice cube." - Michael Saylor</em>
+                    </div>
+                `;
             }
             
             document.getElementById('questionInput').value = '';
@@ -1230,56 +1262,423 @@ def acquisition_targets():
             'error': str(e)
         }), 500
 
-# Home route - MUST be last so specific routes are processed first
-@app.route('/', methods=['GET'])
-@app.route('/agent', methods=['GET'])
-def home():
-    """Landing page for the BLGV Treasury Agent"""
+# Missing route implementations
+@app.route('/treasury-comparison')
+def treasury_comparison():
+    """Treasury comparison tool"""
     return render_template_string('''
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLGV Ultimate Treasury Agent</title>
+    <title>BLGV Treasury Comparison</title>
     <style>
-        body { font-family: -apple-system, system-ui, sans-serif; background: #0a0a0a; color: #fff; margin: 0; padding: 40px; text-align: center; }
-        .container { max-width: 800px; margin: 0 auto; }
-        h1 { color: #f7931a; font-size: 3em; margin-bottom: 20px; }
-        .subtitle { color: #ccc; font-size: 1.2em; margin-bottom: 40px; }
-        .links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-        .link { background: linear-gradient(135deg, #f7931a, #ff6b35); color: #000; padding: 15px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: transform 0.2s; }
-        .link:hover { transform: translateY(-2px); }
-        .status { margin: 40px 0; padding: 20px; background: #1a1a1a; border-radius: 8px; }
-        .bitcoin { color: #f7931a; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: #0a0a0a; color: #fff; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .company-card { background: #1a1a1a; padding: 20px; border-radius: 12px; border: 1px solid #333; }
+        .company-name { color: #f7931a; font-size: 20px; font-weight: bold; margin-bottom: 10px; }
+        .metric { display: flex; justify-content: space-between; margin: 8px 0; padding: 8px 0; border-bottom: 1px solid #333; }
+        .back-btn { background: #f7931a; color: #000; padding: 10px 20px; border-radius: 6px; text-decoration: none; display: inline-block; margin-bottom: 20px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🧡 BLGV Ultimate Treasury Agent</h1>
-        <p class="subtitle">Bitcoin-Maximalist Financial Intelligence • Real-time Data • Saylor-Level Conviction</p>
-        
-        <div class="status">
-            <h3>System Status: <span class="bitcoin">OPERATIONAL</span></h3>
-            <p>Premium Treasury Intelligence • 250+ Company Tracking • Monte Carlo Risk Analysis • Acquisition Intelligence</p>
+        <a href="/" class="back-btn">← Back to Agent</a>
+        <div class="header">
+            <h1>🏆 Bitcoin Treasury Comparison</h1>
+            <p>Compare BLGV against major Bitcoin treasury companies</p>
+        </div>
+        <div class="comparison-grid">
+            <div class="company-card">
+                <div class="company-name">BLGV (Current)</div>
+                <div class="metric"><span>Bitcoin Holdings:</span> <span>40.77 BTC</span></div>
+                <div class="metric"><span>Market Cap:</span> <span>~$42M CAD</span></div>
+                <div class="metric"><span>BTC/Share:</span> <span>0.000323</span></div>
+                <div class="metric"><span>Global Rank:</span> <span>#90-95</span></div>
+            </div>
+            <div class="company-card">
+                <div class="company-name">MicroStrategy (MSTR)</div>
+                <div class="metric"><span>Bitcoin Holdings:</span> <span>506,137 BTC</span></div>
+                <div class="metric"><span>Market Cap:</span> <span>$90B+ USD</span></div>
+                <div class="metric"><span>BTC/Share:</span> <span>0.00256</span></div>
+                <div class="metric"><span>Global Rank:</span> <span>#1</span></div>
+            </div>
+            <div class="company-card">
+                <div class="company-name">Marathon Digital (MARA)</div>
+                <div class="metric"><span>Bitcoin Holdings:</span> <span>26,200+ BTC</span></div>
+                <div class="metric"><span>Market Cap:</span> <span>$8B+ USD</span></div>
+                <div class="metric"><span>BTC/Share:</span> <span>0.000089</span></div>
+                <div class="metric"><span>Global Rank:</span> <span>#3</span></div>
+            </div>
+            <div class="company-card">
+                <div class="company-name">Metaplanet (TARGET)</div>
+                <div class="metric"><span>Bitcoin Holdings:</span> <span>1,762 BTC</span></div>
+                <div class="metric"><span>Market Cap:</span> <span>$2.8B USD</span></div>
+                <div class="metric"><span>BTC/Share:</span> <span>0.000168</span></div>
+                <div class="metric"><span>Global Rank:</span> <span>#8</span></div>
+            </div>
+        </div>
+        <div style="margin-top: 40px; text-align: center; color: #666;">
+            <p><strong>BLGV Strategy:</strong> Use USD $5M convertible to acquire ~42-55 additional BTC, targeting 85-95 total BTC</p>
+            <p><em>"Bitcoin is hope. Study technology, not price." - Michael Saylor</em></p>
+        </div>
+    </div>
+</body>
+</html>
+    ''')
+
+@app.route('/saylor-wisdom')
+def saylor_wisdom():
+    """Michael Saylor wisdom collection"""
+    return render_template_string('''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saylor Wisdom - BLGV Agent</title>
+    <style>
+        body { font-family: -apple-system, system-ui, sans-serif; background: #0a0a0a; color: #fff; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .quote { background: #1a1a1a; padding: 30px; margin: 20px 0; border-radius: 12px; border-left: 4px solid #f7931a; }
+        .quote-text { font-size: 18px; line-height: 1.6; font-style: italic; margin-bottom: 15px; }
+        .quote-context { color: #888; font-size: 14px; }
+        .back-btn { background: #f7931a; color: #000; padding: 10px 20px; border-radius: 6px; text-decoration: none; display: inline-block; margin-bottom: 20px; }
+        .header { text-align: center; margin-bottom: 40px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-btn">← Back to Agent</a>
+        <div class="header">
+            <h1>🧡 Saylor Wisdom</h1>
+            <p>Bitcoin wisdom from the ultimate treasury strategist</p>
         </div>
         
-        <div class="links">
-            <a href="/widget" class="link">🤖 AI Chat Widget</a>
-            <a href="/advanced-analysis" class="link">🧠 Monte Carlo Analysis</a>
-            <a href="/acquisition-targets" class="link">🎯 Acquisition Targets</a>
-            <a href="/treasury-comparison" class="link">🏆 Treasury Comparison</a>
-            <a href="/metrics" class="link">📊 Live Metrics</a>
-            <a href="/saylor-wisdom" class="link">🧡 Saylor Wisdom</a>
-            <a href="/health" class="link">❤️ Health Check</a>
+        <div class="quote">
+            <div class="quote-text">"Bitcoin is hope."</div>
+            <div class="quote-context">Core philosophy - Bitcoin represents hope for financial sovereignty</div>
         </div>
         
-        <div style="margin-top: 60px; color: #666;">
-            <p><em>"Bitcoin is hope. Fiat is a melting ice cube."</em> - Michael Saylor</p>
-            <p>BLGV Ultimate Treasury Agent v4.0.0 - Premium Intelligence Edition</p>
+        <div class="quote">
+            <div class="quote-text">"Fiat is a melting ice cube."</div>
+            <div class="quote-context">On inflation and currency debasement</div>
+        </div>
+        
+        <div class="quote">
+            <div class="quote-text">"The only losing move is not to play."</div>
+            <div class="quote-context">On Bitcoin treasury strategy adoption</div>
+        </div>
+        
+        <div class="quote">
+            <div class="quote-text">"Study technology, not price."</div>
+            <div class="quote-context">Focus on fundamentals over short-term volatility</div>
+        </div>
+        
+        <div class="quote">
+            <div class="quote-text">"Bitcoin is digital property backed by energy."</div>
+            <div class="quote-context">On Bitcoin's fundamental value proposition</div>
+        </div>
+        
+        <div class="quote">
+            <div class="quote-text">"If you want to make a million dollars, buy a million dollars of Bitcoin."</div>
+            <div class="quote-context">On Bitcoin treasury strategy simplicity</div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px; color: #666;">
+            <p><strong>BLGV Implementation:</strong> Following Saylor playbook with convertible debt financing for Bitcoin acquisition</p>
+        </div>
+    </div>
+</body>
+</html>
+    ''')
+
+# Enhanced home route with FAB
+@app.route('/', methods=['GET'])
+@app.route('/agent', methods=['GET'])
+def home():
+    """Enhanced docs homepage with Floating Action Button"""
+    return render_template_string('''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLGV Documentation & Treasury Agent</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: #0a0a0a; color: #fff; line-height: 1.6; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #1a1a1a, #2a2a2a); padding: 60px 20px; text-align: center; }
+        .header h1 { color: #f7931a; font-size: 3.5em; margin-bottom: 20px; font-weight: 700; }
+        .subtitle { color: #ccc; font-size: 1.3em; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        
+        /* Navigation */
+        .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .nav-card { background: #1a1a1a; padding: 25px; border-radius: 12px; border: 1px solid #333; transition: all 0.3s; text-decoration: none; color: #fff; }
+        .nav-card:hover { border-color: #f7931a; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(247, 147, 26, 0.2); }
+        .nav-card h3 { color: #f7931a; margin-bottom: 10px; font-size: 1.2em; }
+        .nav-card p { color: #bbb; font-size: 0.9em; }
+        
+        /* Status section */
+        .status-section { background: #111; padding: 40px 20px; text-align: center; }
+        .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 800px; margin: 0 auto; }
+        .status-item { background: #1a1a1a; padding: 20px; border-radius: 8px; border: 1px solid #333; }
+        .status-value { color: #f7931a; font-size: 1.5em; font-weight: bold; margin-bottom: 5px; }
+        .status-label { color: #888; font-size: 0.9em; }
+        
+        /* FAB Styles */
+        .fab { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: linear-gradient(135deg, #f7931a, #ff6b35); border: none; border-radius: 50%; color: #000; font-size: 24px; cursor: pointer; box-shadow: 0 4px 20px rgba(247, 147, 26, 0.4); transition: all 0.3s; z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        .fab:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(247, 147, 26, 0.6); }
+        .fab.open { background: linear-gradient(135deg, #dc3545, #c82333); }
+        
+        /* Chat Widget */
+        .chat-widget { position: fixed; bottom: 100px; right: 30px; width: 400px; height: 500px; background: #1a1a1a; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); z-index: 999; display: none; flex-direction: column; border: 1px solid #333; }
+        .chat-header { background: linear-gradient(135deg, #f7931a, #ff6b35); padding: 20px; border-radius: 16px 16px 0 0; color: #000; }
+        .chat-header h3 { margin: 0; font-size: 16px; font-weight: 600; }
+        .chat-header p { margin: 5px 0 0 0; font-size: 12px; opacity: 0.8; }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .chat-input-area { padding: 20px; border-top: 1px solid #333; }
+        .chat-input { width: 100%; padding: 12px; background: #0a0a0a; border: 1px solid #444; border-radius: 8px; color: #fff; font-size: 14px; }
+        .chat-send { width: 100%; margin-top: 10px; padding: 12px; background: linear-gradient(135deg, #f7931a, #ff6b35); border: none; border-radius: 8px; color: #000; font-weight: 600; cursor: pointer; }
+        .message { padding: 12px; border-radius: 8px; margin: 5px 0; }
+        .message.user { background: #f7931a; color: #000; align-self: flex-end; max-width: 80%; }
+        .message.assistant { background: #2a2a2a; color: #fff; align-self: flex-start; max-width: 80%; }
+        .typing { color: #f7931a; font-style: italic; }
+        
+        /* Quick suggestions */
+        .suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+        .suggestion { background: #333; padding: 6px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; transition: all 0.2s; color: #ccc; }
+        .suggestion:hover { background: #f7931a; color: #000; }
+        
+        /* Footer */
+        .footer { background: #111; padding: 40px 20px; text-align: center; color: #666; }
+        .footer-quote { font-style: italic; margin-bottom: 20px; font-size: 1.1em; }
+        .footer-credits { font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>🧡 BLGV Documentation</h1>
+        <p class="subtitle">Bitcoin-Native Financial Infrastructure • Premium Treasury Intelligence • Ecosystem Documentation</p>
+    </div>
+    
+    <!-- Navigation Grid -->
+    <div class="nav-grid">
+        <a href="/widget" class="nav-card">
+            <h3>🤖 Ultimate Treasury Agent</h3>
+            <p>AI-powered Bitcoin treasury intelligence with access to premium data sources and competitive analysis</p>
+        </a>
+        <a href="/advanced-analysis" class="nav-card">
+            <h3>🧠 Monte Carlo Analysis</h3>
+            <p>Advanced portfolio risk modeling and Bitcoin volatility analysis with actionable insights</p>
+        </a>
+        <a href="/acquisition-targets" class="nav-card">
+            <h3>🎯 Acquisition Intelligence</h3>
+            <p>Strategic acquisition targets analysis based on BTC efficiency and competitive positioning</p>
+        </a>
+        <a href="/treasury-comparison" class="nav-card">
+            <h3>🏆 Treasury Comparison</h3>
+            <p>Compare BLGV against major Bitcoin treasury companies including MicroStrategy and Metaplanet</p>
+        </a>
+        <a href="/metrics" class="nav-card">
+            <h3>📊 Live Metrics</h3>
+            <p>Real-time Bitcoin price, treasury metrics, and market intelligence dashboard</p>
+        </a>
+        <a href="/saylor-wisdom" class="nav-card">
+            <h3>🧡 Saylor Wisdom</h3>
+            <p>Curated collection of Michael Saylor's Bitcoin treasury strategy insights and philosophy</p>
+        </a>
+        <a href="/health" class="nav-card">
+            <h3>❤️ System Health</h3>
+            <p>Agent status, API connectivity, database health, and system performance monitoring</p>
+        </a>
+        <a href="https://blgvbtc.com" class="nav-card" target="_blank">
+            <h3>🏛️ Treasury Platform</h3>
+            <p>Access the live BLGV Treasury Intelligence Platform with real-time portfolio analytics</p>
+        </a>
+    </div>
+    
+    <!-- Status Section -->
+    <div class="status-section">
+        <h2 style="color: #f7931a; margin-bottom: 30px;">🚀 System Status</h2>
+        <div class="status-grid">
+            <div class="status-item">
+                <div class="status-value">LIVE</div>
+                <div class="status-label">Agent Status</div>
+            </div>
+            <div class="status-item">
+                <div class="status-value">40.77</div>
+                <div class="status-label">BLGV BTC Holdings</div>
+            </div>
+            <div class="status-item">
+                <div class="status-value">$5M</div>
+                <div class="status-label">Available Capital</div>
+            </div>
+            <div class="status-item">
+                <div class="status-value">250+</div>
+                <div class="status-label">Companies Tracked</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-quote">"Bitcoin is hope. Fiat is a melting ice cube. The only losing move is not to play." - Michael Saylor</div>
+        <div class="footer-credits">
+            <p><strong>BLGV Ultimate Treasury Agent v4.0.0</strong> - Premium Intelligence Edition</p>
             <p>Powered by bitcointreasuries.net • Arkham Intelligence • Fidelity Digital Assets • ARK Invest</p>
         </div>
     </div>
+    
+    <!-- Floating Action Button -->
+    <button class="fab" id="fab" onclick="toggleChat()">🧡</button>
+    
+    <!-- Chat Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header">
+            <h3>🧡 BLGV Treasury Agent</h3>
+            <p>Premium Bitcoin Treasury Intelligence • Live</p>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message assistant">
+                <strong>🧡 Treasury Agent:</strong><br>
+                Welcome! I'm the BLGV Ultimate Treasury Agent with access to premium Bitcoin treasury intelligence. Ask me about BLGV's strategy, competitive analysis, or Bitcoin treasury best practices.
+            </div>
+            <div class="suggestions">
+                <span class="suggestion" onclick="sendMessage('Compare BLGV to MicroStrategy after the convertible closing')">MSTR Comparison</span>
+                <span class="suggestion" onclick="sendMessage('What should BLGV do with the $5M?')">Deployment Strategy</span>
+                <span class="suggestion" onclick="sendMessage('Best acquisition targets for BLGV')">Acquisition Targets</span>
+                <span class="suggestion" onclick="sendMessage('BLGV Bitcoin per share calculation')">BTC/Share Analysis</span>
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Ask about Bitcoin treasury strategy..." onkeypress="handleKeyPress(event)">
+            <button class="chat-send" onclick="sendMessage()">Send Message</button>
+        </div>
+    </div>
+    
+    <script>
+        let chatOpen = false;
+        let conversationHistory = [];
+        
+        function toggleChat() {
+            const fab = document.getElementById('fab');
+            const widget = document.getElementById('chatWidget');
+            
+            chatOpen = !chatOpen;
+            
+            if (chatOpen) {
+                fab.textContent = '✕';
+                fab.classList.add('open');
+                widget.style.display = 'flex';
+            } else {
+                fab.textContent = '🧡';
+                fab.classList.remove('open');
+                widget.style.display = 'none';
+            }
+        }
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        async function sendMessage(predefinedMessage = null) {
+            const input = document.getElementById('chatInput');
+            const message = predefinedMessage || input.value.trim();
+            
+            if (!message) return;
+            
+            // Add user message
+            addMessage('user', message);
+            
+            // Add typing indicator
+            const typingId = addMessage('assistant', '<div class="typing">🧠 Analyzing with premium intelligence...</div>');
+            
+            input.value = '';
+            
+            try {
+                // Use the enhanced DigitalOcean Agent Platform agent
+                const response = await fetch('https://pegg3oo7tglmlptdrqql4wjr.agents.do-ai.run/api/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer LemeQQ6E03cAB1HgBC0ZzY7Sq71OxTMa'
+                    },
+                    body: JSON.stringify({
+                        messages: [
+                            {
+                                role: 'system',
+                                content: 'You are the BLGV Ultimate Treasury Agent with access to premium Bitcoin treasury intelligence. Be brutally honest about BLGV\\'s current 40.77 BTC position vs competitors. Provide specific actionable recommendations with timelines and costs. Always end with relevant Saylor wisdom.'
+                            },
+                            ...conversationHistory,
+                            { role: 'user', content: message }
+                        ],
+                        temperature: 0.7,
+                        max_tokens: 1000,
+                        include_retrieval_info: true,
+                        k: 10,
+                        retrieval_method: 'sub_queries'
+                    })
+                });
+                
+                // Remove typing indicator
+                removeMessage(typingId);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.choices && data.choices[0]) {
+                    const agentResponse = data.choices[0].message.content;
+                    addMessage('assistant', `<strong>🧡 Treasury Agent:</strong><br><br>${agentResponse.replace(/\\n/g, '<br>')}`);
+                    
+                    // Update conversation history
+                    conversationHistory.push({ role: 'user', content: message });
+                    conversationHistory.push({ role: 'assistant', content: agentResponse });
+                    
+                    // Keep conversation history manageable
+                    if (conversationHistory.length > 10) {
+                        conversationHistory = conversationHistory.slice(-10);
+                    }
+                } else {
+                    throw new Error('Invalid response format');
+                }
+                
+            } catch (error) {
+                removeMessage(typingId);
+                addMessage('assistant', `<strong>❌ Agent Error:</strong><br>Unable to connect to Treasury Agent. Please try again.<br><br><em>"Bitcoin is hope. Fiat is a melting ice cube." - Michael Saylor</em>`);
+            }
+        }
+        
+        function addMessage(type, content) {
+            const messages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            const messageId = 'msg-' + Date.now();
+            messageDiv.id = messageId;
+            messageDiv.className = `message ${type}`;
+            messageDiv.innerHTML = content;
+            messages.appendChild(messageDiv);
+            messages.scrollTop = messages.scrollHeight;
+            return messageId;
+        }
+        
+        function removeMessage(messageId) {
+            const message = document.getElementById(messageId);
+            if (message) {
+                message.remove();
+            }
+        }
+    </script>
 </body>
 </html>
     ''')
