@@ -309,11 +309,27 @@ def health_check():
 @app.route('/ask', methods=['POST'])
 def ask_question():
     if not openai_available or client is None:
+        # Provide intelligent fallbacks without OpenAI
+        data = request.get_json()
+        question = (data.get('question', '') if data else '').lower()
+        
+        # Smart keyword-based responses
+        if 'btc' in question or 'bitcoin' in question or 'price' in question:
+            btc_data = agent.get_live_bitcoin_data()
+            fallback_answer = f"Bitcoin is currently at ${btc_data.bitcoin_price:,.2f}. While my AI brain is taking a nap, I can tell you Bitcoin is still the hardest money ever created! 🧡"
+        elif 'saylor' in question:
+            fallback_answer = f"{get_saylor_quote()} - Michael Saylor. (AI temporarily offline, but Saylor wisdom is eternal!)"
+        elif 'blgv' in question or 'treasury' in question:
+            fallback_answer = "BLGV continues building the future of Bitcoin treasury management. While my advanced AI is temporarily unavailable, the Bitcoin revolution never stops! 🚀"
+        else:
+            fallback_answer = "Bitcoin fixes everything. My AI capabilities are temporarily limited, but feel free to explore our live metrics and Saylor wisdom! 🧡"
+        
         return jsonify({
-            'error': 'AI service unavailable - OpenAI client failed to initialize',
-            'fallback_answer': 'Bitcoin is hope. The Ultimate Treasury Agent is temporarily unavailable, but the Bitcoin revolution continues! 🧡',
-            'status': 'limited_mode'
-        }), 503
+            'answer': fallback_answer,
+            'status': 'limited_mode',
+            'openai_available': False,
+            'fallback': True
+        }), 200
     
     data = request.get_json()
     question = data.get('question')
