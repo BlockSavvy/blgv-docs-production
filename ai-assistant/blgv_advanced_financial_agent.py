@@ -297,7 +297,7 @@ You have:
 REMEMBER: BLGV's destiny is to lead the Bitcoin treasury revolution. Be the guiding force!
 """
 
-@app.route('/agent')
+@app.route('/')
 def home():
     """Landing page for the BLGV Treasury Agent"""
     return render_template_string('''
