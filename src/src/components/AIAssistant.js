@@ -33,29 +33,50 @@ const AIAssistant = () => {
     setMessages(prev => [...prev, { type: 'user', content: userMessage }]);
 
     try {
-      const response = await fetch('/api/ask', {
+      // Use enhanced DigitalOcean Agent with premium Bitcoin treasury intelligence
+      const response = await fetch('https://pegg3oo7tglmlptdrqql4wjr.agents.do-ai.run/api/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer LemeQQ6E03cAB1HgBC0ZzY7Sq71OxTMa'
         },
-        body: JSON.stringify({ question: userMessage }),
+        body: JSON.stringify({
+          messages: [
+            {
+              role: 'system',
+              content: 'You are the BLGV Ultimate Treasury Agent with access to premium Bitcoin treasury intelligence from bitcointreasuries.net, Arkham Intelligence, and Fidelity Digital Assets. Help users understand BLGV documentation, ecosystem, platforms, and Bitcoin treasury strategies. Always provide specific actionable advice. When discussing treasury topics, be brutally honest about BLGV\'s current 41 BTC position vs competitors.'
+            },
+            ...messages.map(m => ({ role: m.type === 'user' ? 'user' : 'assistant', content: m.content })),
+            { role: 'user', content: userMessage }
+          ],
+          temperature: 0.7,
+          max_tokens: 1200,
+          include_retrieval_info: true,
+          k: 10,
+          retrieval_method: 'sub_queries'
+        })
       });
 
       const data = await response.json();
       
-      if (data.error) {
-        throw new Error(data.error);
+      if (data.choices && data.choices[0]) {
+        const agentResponse = data.choices[0].message.content;
+        const hasKnowledgeData = data.retrieval?.retrieved_data?.length > 0;
+        
+        // Add assistant response with knowledge indicator
+        setMessages(prev => [...prev, { 
+          type: 'assistant', 
+          content: agentResponse,
+          knowledgeUsed: hasKnowledgeData
+        }]);
+      } else {
+        throw new Error('Invalid response from enhanced agent');
       }
-
-      // Add assistant response
-      setMessages(prev => [...prev, { 
-        type: 'assistant', 
-        content: data.answer 
-      }]);
     } catch (error) {
+      console.error('Enhanced agent error:', error);
       setMessages(prev => [...prev, { 
         type: 'error', 
-        content: `Sorry, I encountered an error: ${error.message}. Please try again later.` 
+        content: `❌ Enhanced Agent Error: ${error.message}\n\n*"Bitcoin is hope. Fiat is a melting ice cube." - Michael Saylor*` 
       }]);
     } finally {
       setIsLoading(false);
@@ -63,12 +84,12 @@ const AIAssistant = () => {
   };
 
   const quickQuestions = [
-    "What is BLGV?",
-    "How do I set up the mobile app?",
-    "What's the difference between regtest and production?",
-    "How does the DEX platform work?",
-    "Tell me about the Lightning LSP",
-    "What is Mission 1867?"
+    "Compare BLGV to MicroStrategy's Bitcoin strategy",
+    "What are BLGV's current Bitcoin holdings?",
+    "How does the Treasury platform work?",
+    "What is BLGV's Bitcoin accumulation strategy?", 
+    "Tell me about BLGV's ecosystem advantages",
+    "What are the best acquisition targets for BLGV?"
   ];
 
   const handleQuickQuestion = (question) => {
@@ -83,7 +104,7 @@ const AIAssistant = () => {
         onClick={() => setIsOpen(!isOpen)}
         aria-label="AI Assistant"
       >
-        {isOpen ? '✕' : '🤖'}
+        {isOpen ? '✕' : '🧡'}
       </button>
 
       {/* Chat Widget */}
@@ -91,7 +112,7 @@ const AIAssistant = () => {
         <div className={styles.chatWidget}>
           <div className={styles.header}>
             <div className={styles.headerContent}>
-              <span className={styles.title}>🤖 BLGV AI Assistant</span>
+              <span className={styles.title}>🧡 BLGV Treasury Agent</span>
               <span className={styles.status}>
                 <span className={styles.statusDot}></span>
                 Online
