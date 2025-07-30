@@ -20,7 +20,6 @@ const sidebars = {
       items: [
         'quick-start',
         'installation',
-        'ENVIRONMENT_SECRETS',
         'architecture-overview',
       ],
     },
