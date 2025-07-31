@@ -1,20 +1,17 @@
-name: blgv-docs-clean
+name: blgv-documentation
 region: nyc1
 
-# Custom domains
 domains:
-  - domain: docs.blgvbtc.com
-    type: PRIMARY
-    zone: blgvbtc.com
+- domain: docs.blgvbtc.com
+  type: PRIMARY
+  zone: blgvbtc.com
 
-# Simple static site that calls DO Agent Platform
 static_sites:
-  - name: blgv-docs-site
-    source_dir: /
-    github:
-      repo: BlockSavvy/blgv-docs-production
-      branch: main
-      deploy_on_push: true
-    build_command: echo "Static site - no build needed"
-    routes:
-      - path: / 
+- name: documentation-site
+  github:
+    repo: BlockSavvy/blgv-docs-production
+    branch: main
+    deploy_on_push: true
+  build_command: npm ci && npm run build
+  routes:
+  - path: / 
