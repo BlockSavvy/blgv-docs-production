@@ -21,6 +21,7 @@ const sidebars = {
         'quick-start',
         'installation',
         'architecture-overview',
+        'agent',
       ],
     },
     {
