@@ -1,4 +1,4 @@
-name: blgv-documentation
+name: blgv-docs-fresh
 region: nyc1
 
 domains:
@@ -7,7 +7,7 @@ domains:
   zone: blgvbtc.com
 
 static_sites:
-- name: documentation-site
+- name: docs-site
   github:
     repo: BlockSavvy/blgv-docs-production
     branch: main
