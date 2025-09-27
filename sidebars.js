@@ -68,6 +68,7 @@ const sidebars = {
       label: '🚀 Platforms',
       items: [
         'platforms/treasury',
+        'platforms/bnpaln',
         'platforms/dex',
         'platforms/pool',
         'platforms/lsp',
