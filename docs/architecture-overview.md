@@ -19,6 +19,7 @@ graph TB
     
     subgraph "💼 Business Logic Layer"
         Treasury[🏛️ Treasury Platform<br/>React + TypeScript]
+        bnPALN[🏛️ bnPALN Platform<br/>Next.js + Rust]
         DEX[⚡ DEX Platform<br/>React + TypeScript]  
         Pool[⛏️ Mining Pool<br/>Python + Flask]
         LSP[⚡ Lightning LSP<br/>Node.js + TypeScript]
@@ -41,6 +42,7 @@ graph TB
     API_Clients --> Unified_API
     
     Unified_API --> Treasury
+    Unified_API --> bnPALN
     Unified_API --> DEX
     Unified_API --> Pool
     Unified_API --> LSP

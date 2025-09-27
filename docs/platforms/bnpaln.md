@@ -5,7 +5,9 @@
 
 ## 🎯 **Overview**
 
-bnPALN is BLGV's strategic financing platform that enables treasuries to raise USD liquidity against Bitcoin collateral without selling BTC or facing liquidation risk. As the **6th platform** in the BLGV ecosystem, bnPALN serves as the **financial foundation** that enables sustainable operations across all platforms.
+bnPALN is BLGV's revolutionary Bitcoin-native perpetual financing platform that enables treasuries to raise USD liquidity against Bitcoin collateral without selling BTC or facing liquidation risk. As the **6th platform** in the BLGV ecosystem, bnPALN serves as the **financial foundation** that enables sustainable operations across all platforms.
+
+**Live Treasury Demonstration**: The platform currently showcases **83.12763270 BTC** in actual BLGV treasury holdings, demonstrating institutional-scale capacity with a **$9.12M+ vault** at current Bitcoin prices.
 
 ### **Key Features**
 - **Bitcoin-Native Custody**: Taproot/MuSig2 vault on Bitcoin L1

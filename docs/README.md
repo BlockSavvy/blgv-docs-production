@@ -12,17 +12,22 @@
 
 **Mission**: Provide transparent, secure, and efficient treasury management solutions while developing the critical infrastructure needed for global Bitcoin adoption.
 
+### **🏛️ Institutional Innovation**
+
+BLGV has achieved a historic milestone with the **world's first institutional-grade Bitcoin treasury financing platform** (bnPALN), demonstrating **83.13 BTC ($9.12M+) in live treasury holdings** with revolutionary perpetual financing capabilities that enable treasuries to access USD liquidity without ever selling Bitcoin.
+
 ---
 
 ## 🌐 **Ecosystem Overview**
 
-The BLGV ecosystem consists of five integrated platforms that create a comprehensive Bitcoin-native financial infrastructure:
+The BLGV ecosystem consists of six integrated platforms that create a comprehensive Bitcoin-native financial infrastructure:
 
 ### **Core Platforms**
 
 | Platform | Purpose | Technology | Status |
 |----------|---------|------------|--------|
 | **🏛️ Treasury Intelligence** | AI-powered treasury analytics & management | React + TypeScript | ✅ Production |
+| **🏛️ bnPALN Platform** | Bitcoin-native perpetual treasury financing | Next.js + Rust | ✅ Production |
 | **⚡ DEX Platform** | Bitcoin-native decentralized exchange | React + Node.js | ✅ Production |
 | **⛏️ Mining Pool** | Professional Bitcoin mining operations | Python + Flask | ✅ Production |
 | **📱 Mobile App** | Unified mobile experience | React Native + Expo | 🔶 Beta |
@@ -43,6 +48,7 @@ The BLGV ecosystem consists of five integrated platforms that create a comprehen
 
 ### **For Users**
 - **Treasury Platform**: [https://blgvbtc.com](https://blgvbtc.com) - Professional treasury analytics
+- **bnPALN Platform**: [https://paln.blgvbtc.com](https://paln.blgvbtc.com) - Bitcoin treasury financing
 - **DEX Platform**: [https://dex.blgvbtc.com](https://dex.blgvbtc.com) - Bitcoin trading
 - **Mining Pool**: [https://pool.blgvbtc.com](https://pool.blgvbtc.com) - Join our mining operations
 - **Mobile App**: Available on iOS/Android (Beta)
@@ -73,6 +79,7 @@ cd platforms/blgv-wallet-app && npm start
 Unified-Treasury-System/
 ├── platforms/                 # All platform applications
 │   ├── treasury/              # Treasury Intelligence Platform
+│   ├── bnpaln/                # Bitcoin-Native Perpetual Financing
 │   ├── dex/                   # Decentralized Exchange
 │   ├── pool/                  # Mining Pool Operations
 │   ├── blgv-wallet-app/       # Mobile Application
@@ -93,6 +100,7 @@ Unified-Treasury-System/
 graph TB
     Mobile[📱 Mobile App] --> API[🔌 Unified API]
     Treasury[🏛️ Treasury] --> API
+    bnPALN[🏛️ bnPALN] --> API
     DEX[⚡ DEX] --> API
     Pool[⛏️ Pool] --> API
     LSP[⚡ LSP] --> API
@@ -183,6 +191,7 @@ graph TB
 
 ### **Live Platforms**
 - **Treasury Intelligence**: [blgvbtc.com](https://blgvbtc.com)
+- **bnPALN Platform**: [paln.blgvbtc.com](https://paln.blgvbtc.com)
 - **DEX Platform**: [dex.blgvbtc.com](https://dex.blgvbtc.com)
 - **Mining Pool**: [pool.blgvbtc.com](https://pool.blgvbtc.com)
 - **Unified API**: `blgv-unified-api-*.ondigitalocean.app`
@@ -243,6 +252,7 @@ cd regtest-ecosystem
 
 ### **Platform Documentation**
 - [Treasury Platform](platforms/treasury.md) - Analytics & intelligence
+- [bnPALN Platform](platforms/bnpaln.md) - Bitcoin treasury financing
 - [DEX Platform](platforms/dex.md) - Trading & exchange
 - [Mining Pool](platforms/pool.md) - Mining operations
 - [Mobile App](platforms/mobile.md) - iOS/Android application

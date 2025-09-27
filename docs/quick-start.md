@@ -7,6 +7,7 @@ Get up and running with the BLGV Bitcoin-native ecosystem in under 5 minutes.
 BLGV (Belgravia Hartford) is a comprehensive Bitcoin-native financial infrastructure platform featuring:
 
 - **🏛️ Treasury Intelligence** - Professional Bitcoin treasury management
+- **🏛️ bnPALN Platform** - Revolutionary Bitcoin treasury financing (83.13 BTC live vault)
 - **⚡ Decentralized Exchange** - Advanced Bitcoin trading with Lightning & Taproot Assets  
 - **⛏️ Mining Pool** - Mission 1867 sustainable mining operations
 - **⚡ Lightning LSP** - Enterprise Lightning Network services
@@ -20,6 +21,7 @@ BLGV (Belgravia Hartford) is a comprehensive Bitcoin-native financial infrastruc
 graph TB
     Mobile[📱 Mobile App] --> API[🔌 Unified API]
     Treasury[🏛️ Treasury] --> API
+    bnPALN[🏛️ bnPALN] --> API
     DEX[⚡ DEX] --> API
     Pool[⛏️ Pool] --> API
     LSP[⚡ LSP] --> API

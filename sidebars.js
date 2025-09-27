@@ -14,6 +14,7 @@ const sidebars = {
   // Main documentation sidebar
   mainSidebar: [
     'README',
+    'institutional-overview',
     {
       type: 'category',
       label: '🚀 Getting Started',
